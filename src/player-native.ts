@@ -3,8 +3,8 @@ import { Player } from './player';
 
 export class PlayerNative extends Player<HTMLVideoElement> {
 
-    constructor(url: string, htmlPlayer: HTMLVideoElement, config: IPlayerConfig) {
-        super(url, htmlPlayer, config);
+    constructor(url: string, laUrl: string, htmlPlayer: HTMLVideoElement, config: IPlayerConfig) {
+        super(url, laUrl, htmlPlayer, config);
     }
 
     public load(): void {

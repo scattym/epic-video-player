@@ -12,14 +12,16 @@ export class PlayerDash extends Player<dashjs.MediaPlayerClass> {
     return;
   }
 
-  constructor(url: string, htmlPlayer: HTMLVideoElement, config: IPlayerConfig) {
-    super(url, htmlPlayer, config);
+  constructor(url: string, laUrl: string, htmlPlayer: HTMLVideoElement, config: IPlayerConfig) {
+    super(url, laUrl, htmlPlayer, config);
   }
 
   public load(): void {
     this.reset();
+    let protData = {serverURL: this.laUrl, "com.widevine.alpha": {serverURL: this.laUrl,}};
     try {
       this.player = dashjs.MediaPlayer().create();
+      this.player.setProtectionData(protData);
       this.player.getDebug().setLogToBrowserConsole(false);
       this.player.initialize(this.htmlPlayer, this.url, false);
 
@@ -29,6 +31,7 @@ export class PlayerDash extends Player<dashjs.MediaPlayerClass> {
           this.player.setAutoSwitchQualityFor('video', false);
           this.player.enableLastBitrateCaching(false);
           this.player.setInitialBitrateFor('video', this.config.initialRenditionKbps);
+
         } else {
           this.player.setAutoSwitchQualityFor('video', true);
           this.player.enableLastBitrateCaching(false);
